@@ -16,8 +16,8 @@ namespace InsertarGraficador
 {
     public class clasInsertarTabGrafica
     {
-        //sirve para insertar datos
-
+        
+        //---------------funcion de prueba para probar la conexion--------------------
         public void prueba(string dato, string dato2) {
             try
             {
