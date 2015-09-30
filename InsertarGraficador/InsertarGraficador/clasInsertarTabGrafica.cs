@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 /*
  * programador: Kevin Douglas Cajbon Asturias
@@ -21,16 +22,14 @@ namespace InsertarGraficador
         public void prueba(string dato, string dato2) {
             try
             {
-                MySqlCommand mComandop = new MySqlCommand(String.Format("Select * for trgrafica where madato='"+dato+"' and madato2='"+dato2+"'"), clasConexion.funConexion());
-                MySqlDataReader mReader = mComandop.ExecuteReader();
+                MySqlCommand comando = new MySqlCommand(string.Format("insert INTO puntos VALUES('"+dato+"','"+dato2+"')"), clasConexion.funConexion());
+                comando.ExecuteNonQuery();
+                MessageBox.Show("Se inserto con exito","Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                while(mReader.Read()){
-                    dato = mReader.GetString(0);
-                    dato2 = mReader.GetString(1);
-                }
             }
             catch {
-                
+                //System.Console.WriteLine("no se inserto");
+                MessageBox.Show("Se produjo un error en tabla empleado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         
         }
