@@ -15,7 +15,7 @@ namespace InsertarGraficador
         public static MySqlConnection funConexion()
         {
 
-            MySqlConnection Conexion = new MySqlConnection("server =localhost; userid =root; password =; database = definir");
+            MySqlConnection Conexion = new MySqlConnection("server =localhost; userid =root; password =; database = graficas");
             Conexion.Open();
             return Conexion;
         }
