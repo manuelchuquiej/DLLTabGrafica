@@ -9,10 +9,13 @@ namespace InsertarGraficador
 {
     class clasConexion
     {
+
+
+        //-----------Se creo la Clase para conexion de inico de datos-----------------
         public static MySqlConnection funConexion()
         {
 
-            MySqlConnection Conexion = new MySqlConnection("server =localhost; userid =root; password =; database =LABORATORIO");
+            MySqlConnection Conexion = new MySqlConnection("server =localhost; userid =root; password =; database = definir");
             Conexion.Open();
             return Conexion;
         }
