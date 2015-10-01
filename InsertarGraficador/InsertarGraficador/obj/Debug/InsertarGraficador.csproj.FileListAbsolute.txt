@@ -3,3 +3,8 @@ C:\Users\Usuario\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGrafi
 C:\Users\Usuario\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\obj\Debug\InsertarGraficador.csprojResolveAssemblyReference.cache
 C:\Users\Usuario\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\obj\Debug\InsertarGraficador.dll
 C:\Users\Usuario\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\obj\Debug\InsertarGraficador.pdb
+C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\bin\Debug\InsertarGraficador.dll
+C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\bin\Debug\InsertarGraficador.pdb
+C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\obj\Debug\InsertarGraficador.csprojResolveAssemblyReference.cache
+C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\obj\Debug\InsertarGraficador.dll
+C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\obj\Debug\InsertarGraficador.pdb

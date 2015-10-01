@@ -21,14 +21,15 @@ namespace InsertarGraficador
         
         //---------------funcion de prueba para probar la conexion--------------------
         
-        public void IdentificacionGrafico(string sTipoGrafica, string sTituloGrafica, string sTituloEjeX, string sTituloEjeY, string[] sX, double[] sY) {
-            DateTime fe = DateTime.Today;
-            string sFecha = fe.ToString("d");
+        public void InsertarGrafico(string sTipoGrafica, string sTituloGrafica, string sTituloEjeX, string sTituloEjeY, string[] sX, double[] sY) {
+            DateTime fe = new DateTime();
+            string sFecha = fe.Day+"-"+fe.Month+"-"+fe.Year;
+            //string sfechan = ""
             int iTamano = sX.Length;
             string sCodigo="";
             try
             {
-                MySqlCommand comando = new MySqlCommand(string.Format("INSERT INTO TrGRAFICA VALUES('"+sFecha+"', '"+sTipoGrafica+"', '"+sTituloGrafica+"','"+sTituloEjeX+"', '"+sTituloEjeY+"')"), clasConexion.funConexion());
+                MySqlCommand comando = new MySqlCommand(string.Format("INSERT INTO TrGRAFICA (dfecha, ctipo, ctitulografica, cejex, cejey) VALUES('" + sFecha + "', '" + sTipoGrafica + "', '" + sTituloGrafica + "','" + sTituloEjeX + "', '" + sTituloEjeY + "')"), clasConexion.funConexion());
                 comando.ExecuteNonQuery();
                 MessageBox.Show("Se inserto con exito","Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 
@@ -38,13 +39,11 @@ namespace InsertarGraficador
                 while (reader.Read())
                     {
                         sCodigo = reader.GetString(0);                        
-                    }
+                    }                
 
-                
-
-                for (int i = 0; i <= iTamano; i++)
+                for (int i = 0; i < iTamano; i++)
                 {
-                    MySqlCommand comando3 = new MySqlCommand(string.Format("INSERT INTO MaPUNTO VALUES('" + sX[i] + "', '" + sY[i]+ "', '" + sCodigo + "')"), clasConexion.funConexion());
+                    MySqlCommand comando3 = new MySqlCommand(string.Format("INSERT INTO MaPUNTO(cx, cy, ncodgrafica) VALUES('" + sX[i] + "', '" + sY[i]+ "', '" + sCodigo + "')"), clasConexion.funConexion());
                     comando3.ExecuteNonQuery();
                 }
 
@@ -55,5 +54,56 @@ namespace InsertarGraficador
             }
         
         }
+
+        public List<string> lConsultaTitulos()
+        {
+            List<string> lTitulos = new List<string>();
+            MySqlCommand comando = new MySqlCommand(String.Format("SELECT ctitulografica FROM TrGRAFICA"), clasConexion.funConexion());
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            while (reader.Read())
+            {
+                lTitulos.Add(reader.GetString(0));
+            }
+
+            return lTitulos;
+        }
+
+        public void ArregloX(string sFecha, string sTituloGrafica)
+        {
+            List<string> lX = new List<string>();
+            
+            MySqlCommand comando = new MySqlCommand(String.Format("SELECT MaPUNTO.cx FROM MaPUNTO, TrGRAFICA WHERE MaPUNTO.ncodgrafica=TrGRAFICA.ncodgrafica and TrGRAFICA.dfecha='"+sFecha+"' and TrGrafica.ctitulografica='"+sTituloGrafica+"'"), clasConexion.funConexion());
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            while (reader.Read())
+            {
+                lX.Add(reader.GetString(0));
+            }
+
+            string[] sX= new string[lX.Count];
+            for(int i=0;i<=lX.Count;i++){
+                sX[i] = lX[i];
+            }
+            //return lX[];
+        }
+
+        public void ArregloY(string sFecha, string sTituloGrafica)
+        {
+            List<string> lY = new List<string>();
+            MySqlCommand comando = new MySqlCommand(String.Format("SELECT MaPUNTO.cy FROM MaPUNTO, TrGRAFICA WHERE MaPUNTO.ncodgrafica=TrGRAFICA.ncodgrafica and TrGRAFICA.dfecha='"+sFecha+"' and TrGrafica.ctitulografica='"+sTituloGrafica+"'"), clasConexion.funConexion());
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            while (reader.Read())
+            {
+                lY.Add(reader.GetString(0));
+            }
+
+            string[] sY = new string[lY.Count];
+            for (int i = 0; i <= lY.Count; i++)
+            {
+                sY[i] = lY[i];
+            }
+        }     
     }
 }
