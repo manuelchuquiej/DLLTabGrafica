@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="clasConexion.cs" />
     <Compile Include="clasInsertarTabGrafica.cs" />
+    <Compile Include="Datos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
