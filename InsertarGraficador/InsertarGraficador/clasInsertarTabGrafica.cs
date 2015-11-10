@@ -25,17 +25,17 @@ namespace InsertarGraficador
         //----------------- FUNCION QUE INSERTA LOS DATOS DE LA GRAFICA QUE SE ESTA CREANDO EN LA BD--------------------------------//
         // La funcion realiza la insercion en cada una de las tablas que se encuentran en la BD
         
-        public void funInsertarGrafico(string sTipoGrafica, string sTituloGrafica, string sTituloEjeX, string sTituloEjeY, string[] sX, double[] dX, double[] dY) {
+        public void funInsertarGrafico(string sTipoGrafica, string sTituloGrafica, string sTituloEjeX, string sTituloEjeY, string[] sX, double[] dX, double[] dY, string sCodUsuario) {
             
             DateTime fe = DateTime.Today;
             string sFecha = fe.Year+"-"+fe.Month+"-"+fe.Day;   //-------- SE ALMACENA LA FECHA EN UNA VARIABLE PARA QUE ESTE SEA INSERTADO EN EL QUERY DE INSERCION--------         
             int iTamano = dY.Length;
             string sCodigo="";
-            string sCodigoUsuario = "";
+            sCodUsuario = "";
             try
             {                
                 //----------INSERCION EN LA TABLA TrGRAFICA--------------//
-                OdbcCommand mySqlComando = new OdbcCommand(string.Format("INSERT INTO TrGRAFICA (dfecha, ctipo, ctitulografica, cejex, cejey) VALUES('" + sFecha + "', '" + sTipoGrafica + "', '" + sTituloGrafica + "','" + sTituloEjeX + "', '" + sTituloEjeY + "', '" + sCodigoUsuario + "')"), ConexionODBC.Conexion.ObtenerConexion());
+                OdbcCommand mySqlComando = new OdbcCommand(string.Format("INSERT INTO TrGRAFICA (dfecha, ctipo, ctitulografica, cejex, cejey, ncodusuario) VALUES('" + sFecha + "', '" + sTipoGrafica + "', '" + sTituloGrafica + "','" + sTituloEjeX + "', '" + sTituloEjeY + "', '" + sCodUsuario + "')"), ConexionODBC.Conexion.ObtenerConexion());
                 mySqlComando.ExecuteNonQuery();
                 
                 MessageBox.Show("Se inserto con exito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
