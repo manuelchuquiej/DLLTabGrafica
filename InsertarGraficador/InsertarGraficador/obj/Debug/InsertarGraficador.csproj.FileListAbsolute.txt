@@ -8,3 +8,4 @@ C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGrafica
 C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\obj\Debug\InsertarGraficador.csprojResolveAssemblyReference.cache
 C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\obj\Debug\InsertarGraficador.dll
 C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\obj\Debug\InsertarGraficador.pdb
+C:\Users\kevin\Documents\GitHub\DLLTabGrafica\InsertarGraficador\InsertarGraficador\bin\Debug\ConexionODBC.dll

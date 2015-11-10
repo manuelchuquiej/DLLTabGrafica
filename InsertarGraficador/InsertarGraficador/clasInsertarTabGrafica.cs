@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ConexionODBC;
+using System.Data.Odbc;
 
 /*
  * programador: Kevin Douglas Cajbon Asturias
@@ -33,30 +35,30 @@ namespace InsertarGraficador
             try
             {                
                 //----------INSERCION EN LA TABLA TrGRAFICA--------------//
-                MySqlCommand comando = new MySqlCommand(string.Format("INSERT INTO TrGRAFICA (dfecha, ctipo, ctitulografica, cejex, cejey) VALUES('" + sFecha + "', '" + sTipoGrafica + "', '" + sTituloGrafica + "','" + sTituloEjeX + "', '" + sTituloEjeY + "', '"+sCodigoUsuario+"')"), clasConexion.funConexion());
-                comando.ExecuteNonQuery();
+                OdbcCommand mySqlComando = new OdbcCommand(string.Format("INSERT INTO TrGRAFICA (dfecha, ctipo, ctitulografica, cejex, cejey) VALUES('" + sFecha + "', '" + sTipoGrafica + "', '" + sTituloGrafica + "','" + sTituloEjeX + "', '" + sTituloEjeY + "', '" + sCodigoUsuario + "')"), ConexionODBC.Conexion.ObtenerConexion());
+                mySqlComando.ExecuteNonQuery();
+                
                 MessageBox.Show("Se inserto con exito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 //----------SE OBTIENE EL CODIGO DE LA GRAFICA INSERTADA ARRIBA PARA PODER INGRESAR LOS PUNTOS DE ESTE--------------//
-                MySqlCommand comando2 = new MySqlCommand(String.Format("SELECT MAX(ncodgrafica) FROM TrGRAFICA WHERE ctipo='"+sTipoGrafica+"'"), clasConexion.funConexion());
-                MySqlDataReader reader = comando2.ExecuteReader();
-
-                while (reader.Read())
-                    {
-                        sCodigo = reader.GetString(0);                        
-                    }                
+                OdbcCommand mySqlComando2 = new OdbcCommand(string.Format("SELECT MAX(ncodgrafica) FROM TrGRAFICA WHERE ctipo='" + sTipoGrafica + "'"), ConexionODBC.Conexion.ObtenerConexion());
+                OdbcDataReader mySqlDLector = mySqlComando2.ExecuteReader();
+                while (mySqlDLector.Read())
+                {
+                    sCodigo = mySqlDLector.GetString(0);
+                }                                
 
                 //----------SE HACE UN FOR PARA INSERTAR CADA UNO DE LOS PUNTOS QUE LA GRAFICA TENDRA---------------//
                 for (int i = 0; i < iTamano; i++)
                 {
                     if (dX==null)
                     {
-                        MySqlCommand comando3 = new MySqlCommand(string.Format("INSERT INTO MaPUNTO(cx, cy, ncodgrafica) VALUES('" + sX[i] + "', '" + dY[i] + "', '" + sCodigo + "')"), clasConexion.funConexion());
-                        comando3.ExecuteNonQuery();
+                        OdbcCommand mySqlComando3 = new OdbcCommand(string.Format("INSERT INTO MaPUNTO(cx, cy, ncodgrafica) VALUES('" + sX[i] + "', '" + dY[i] + "', '" + sCodigo + "')"), ConexionODBC.Conexion.ObtenerConexion());
+                        mySqlComando3.ExecuteNonQuery();                        
                     }
                     else {
-                        MySqlCommand comando3 = new MySqlCommand(string.Format("INSERT INTO MaPUNTO(cx, cy, ncodgrafica) VALUES('" + dX[i] + "', '" + dY[i] + "', '" + sCodigo + "')"), clasConexion.funConexion());
-                        comando3.ExecuteNonQuery();
+                        OdbcCommand mySqlComando4 = new OdbcCommand(string.Format("INSERT INTO MaPUNTO(cx, cy, ncodgrafica) VALUES('" + dX[i] + "', '" + dY[i] + "', '" + sCodigo + "')"), ConexionODBC.Conexion.ObtenerConexion());
+                        mySqlComando4.ExecuteNonQuery();                        
                     }                    
                 }
             }
@@ -70,13 +72,13 @@ namespace InsertarGraficador
         public List<string> lConsultaTitulos()
         {
             List<string> lTitulos = new List<string>();
-            MySqlCommand comando = new MySqlCommand(String.Format("SELECT ctitulografica FROM TrGRAFICA"), clasConexion.funConexion());
-            MySqlDataReader reader = comando.ExecuteReader();
-
-            while (reader.Read())
+            OdbcCommand mySqlComando2 = new OdbcCommand(string.Format("SELECT ctitulografica FROM TrGRAFICA"), ConexionODBC.Conexion.ObtenerConexion());
+            OdbcDataReader mySqlDLector = mySqlComando2.ExecuteReader();
+            while (mySqlDLector.Read())
             {
-                lTitulos.Add(reader.GetString(0));
-            }
+                lTitulos.Add(mySqlDLector.GetString(0));
+            } 
+            
             return lTitulos;
         }
 
@@ -90,17 +92,16 @@ namespace InsertarGraficador
             Datos dato = new Datos();
 
             //----------SELECT QUE OBTIENE EL NUMERO DE PUNTOS QUE LA GRAFICA POSEE--------------//
-            MySqlCommand comando = new MySqlCommand(String.Format("SELECT COUNT(MaPUNTO.cx), trgrafica.ctipo, trgrafica.ctitulografica, trgrafica.cejex, trgrafica.cejey FROM MaPUNTO, TrGRAFICA WHERE MaPUNTO.ncodgrafica=TrGRAFICA.ncodgrafica and TrGRAFICA.dfecha='"+sFecha+"' and TrGrafica.ctitulografica='"+sTituloGrafica+"'"), clasConexion.funConexion());
-            MySqlDataReader reader = comando.ExecuteReader();
-
-            while (reader.Read())
+            OdbcCommand mySqlComando2 = new OdbcCommand(string.Format("SELECT COUNT(MaPUNTO.cx), trgrafica.ctipo, trgrafica.ctitulografica, trgrafica.cejex, trgrafica.cejey FROM MaPUNTO, TrGRAFICA WHERE MaPUNTO.ncodgrafica=TrGRAFICA.ncodgrafica and TrGRAFICA.dfecha='" + sFecha + "' and TrGrafica.ctitulografica='" + sTituloGrafica + "'"), ConexionODBC.Conexion.ObtenerConexion());
+            OdbcDataReader mySqlDLector = mySqlComando2.ExecuteReader();
+            while (mySqlDLector.Read())
             {
-                sTamanoLee = reader.GetString(0);
-                dato.tipo = reader.GetString(1);
-                dato.titulo = reader.GetString(2);
-                dato.nombre_ejex = reader.GetString(3);
-                dato.nombre_ejey = reader.GetString(4);
-            }            
+                sTamanoLee = mySqlDLector.GetString(0);
+                dato.tipo = mySqlDLector.GetString(1);
+                dato.titulo = mySqlDLector.GetString(2);
+                dato.nombre_ejex = mySqlDLector.GetString(3);
+                dato.nombre_ejey = mySqlDLector.GetString(4);
+            }                         
 
             iTamano = System.Int32.Parse(sTamanoLee);
             
@@ -110,29 +111,24 @@ namespace InsertarGraficador
             dato.sx = new string[iTamano];
 
             //----------SELECT QUE OBTIENE TODOS LOS PUNTOS DE LA GRAFICA QUE SE DESEA--------------//
-            MySqlCommand comando2 = new MySqlCommand(String.Format("SELECT MaPUNTO.cx, MaPUNTO.cy FROM MaPUNTO, TrGRAFICA WHERE MaPUNTO.ncodgrafica=TrGRAFICA.ncodgrafica and TrGRAFICA.dfecha='" + sFecha + "' and TrGrafica.ctitulografica='" + sTituloGrafica + "'"), clasConexion.funConexion());
-            MySqlDataReader reader2 = comando2.ExecuteReader();
-
-            while (reader2.Read())
+            OdbcCommand mySqlComando3 = new OdbcCommand(string.Format("SELECT MaPUNTO.cx, MaPUNTO.cy FROM MaPUNTO, TrGRAFICA WHERE MaPUNTO.ncodgrafica=TrGRAFICA.ncodgrafica and TrGRAFICA.dfecha='" + sFecha + "' and TrGrafica.ctitulografica='" + sTituloGrafica + "'"), ConexionODBC.Conexion.ObtenerConexion());
+            OdbcDataReader mySqlDLector2 = mySqlComando3.ExecuteReader();
+            while (mySqlDLector2.Read())
             {
                 if ((dato.tipo.ToLower() == "lineal") || (dato.tipo.ToLower() == "pie"))
                 {
-                    dato.dx[iContador] = reader2.GetDouble(0);
-                    dato.dy[iContador] = reader2.GetDouble(1);
+                    dato.dx[iContador] = mySqlDLector2.GetDouble(0);
+                    dato.dy[iContador] = mySqlDLector2.GetDouble(1);
                 }
                 else
                 {
-                    dato.sx[iContador] = reader2.GetString(0);
-                    dato.dy[iContador] = reader2.GetDouble(1);
+                    dato.sx[iContador] = mySqlDLector2.GetString(0);
+                    dato.dy[iContador] = mySqlDLector2.GetDouble(1);
                 }
                 iContador++;
-            }
-
-            for (int j = 0; j < iTamano; j++) {
-                System.Console.WriteLine(dato.sx[j]);
-                System.Console.WriteLine(dato.dy[j]);
-            }
-                return dato;
+            }                       
+            
+            return dato;
         }
         //------------------------------------------------------------------------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------------------------------------------------------------------------
