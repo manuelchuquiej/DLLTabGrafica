@@ -5,6 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
+/*
+ * programador: Kevin Douglas Cajbon Asturias
+ * programador: Dylan Isaac Corado Urizar
+ * Asignado por: Josue Daniel Revolorio Menendez
+ * 
+ */
+
 namespace InsertarGraficador
 {
     class clasConexion
